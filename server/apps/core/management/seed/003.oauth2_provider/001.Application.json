@@ -1,0 +1,11 @@
+[
+  {
+    "client_id": "WuMbmZBv9Up1fILxulSouRtZ5FSBrifV631jhy0X",
+    "client_secret": "asBIDsk67qqenHdWNyqslPlwM2S2OqGEAjDyjVDB95hecm7HiiujdywsWNGtsHkJq3QSKf48qgBOP7p1tAGZ2GoBaHgVIydXAezJOHLKyJx5Lp7vdKMmgAy5iZDTwh1J",
+    "authorization_grant_type": "password",
+    "client_type": "confidential",
+    "redirect_uris": "/auth/login",
+    "name": "Клиентское web-приложение",
+    "algorithm": ""
+  }
+]
