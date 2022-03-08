@@ -7,7 +7,8 @@
         :to="localePath({ name: 'pages-pageId', params: { pageId: page.id }})"
         :src="`/${page.avatar}`"
         reverse-transition="fade-transition"
-        transition="fade-transition")
+        transition="fade-transition"
+      )
 </template>
 
 <script lang="ts">

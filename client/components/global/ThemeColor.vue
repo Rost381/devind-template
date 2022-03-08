@@ -20,20 +20,18 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import type { Ref } from '#app'
+import { defineComponent, ref } from '#app'
 
-export default Vue.extend<any, any, any, any>({
-  data: () => ({
-    active: false
-  }),
-  computed: {
-    themes (): { value: string, icon: string }[] {
-      return [
-        { value: 'system', icon: 'desktop-classic' },
-        { value: 'light', icon: 'lightbulb-on-outline' },
-        { value: 'dark', icon: 'lightbulb-on' }
-      ]
-    }
+export default defineComponent({
+  setup () {
+    const active: Ref<boolean> = ref<boolean>(false)
+    const themes: { value: string, icon: string }[] = [
+      { value: 'system', icon: 'desktop-classic' },
+      { value: 'light', icon: 'lightbulb-on-outline' },
+      { value: 'dark', icon: 'lightbulb-on' }
+    ]
+    return { active, themes }
   }
 })
 </script>

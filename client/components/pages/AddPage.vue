@@ -90,8 +90,6 @@
                 :success="valid"
                 clearable
               )
-            v-checkbox(v-model="addText" :label="$t('pages.page.add.text')")
-            rich-text-editor(v-if="addText" v-model="input.text")
             v-card-actions
               v-spacer
               v-btn(:disabled="invalid" :loading="loading" type="submit" color="primary") {{ $t('pages.page.add.add') }}
@@ -111,10 +109,8 @@ import {
   CategoryType,
   ErrorFieldType
 } from '~/types/graphql'
-import RichTextEditor from '~/components/common/editor/RichTextEditor.vue'
 
 @Component<AddPage>({
-  components: { RichTextEditor },
   computed: {
     pageKindList () {
       return [
@@ -194,8 +190,7 @@ export default class AddPage extends Vue {
         hide: false,
         priority: false,
         categoryId: this.category.id,
-        tagNames: [],
-        text: ''
+        tagNames: []
       }
     }
   }

@@ -62,7 +62,7 @@ export default defineComponent({
     useNuxt2Meta(() => ({ title: !loading.value ? category.value.text : t('loading') as string }))
     const bc: ComputedRef<BreadCrumbsItem[]> = computed<BreadCrumbsItem[]>(() => {
       const breadCrumbs: BreadCrumbsItem[] = []
-      if (!loading) {
+      if (!loading.value) {
         if (category.value.parent) {
           breadCrumbs.push({
             text: category.value.parent.text,

@@ -28,7 +28,6 @@ query Segments {
           tags {
             ...TagFields
           }
-          preview
           __typename
         }
         __typename

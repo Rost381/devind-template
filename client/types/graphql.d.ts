@@ -147,8 +147,6 @@ export type AddPageMutationInput = {
   signature?: InputMaybe<Scalars['String']>;
   /** Теги на странице */
   tagNames?: InputMaybe<Array<Scalars['String']>>;
-  /** Первоначальное добавление текста страницы */
-  text?: InputMaybe<Scalars['String']>;
   /** Заголовок */
   title: Scalars['String'];
 };
@@ -2017,8 +2015,6 @@ export type PageType = Node & {
   kind?: Maybe<PageKindType>;
   /** Показывать параллакс или нет */
   parallax: Scalars['Boolean'];
-  /** Первая текстовая секция */
-  preview?: Maybe<Scalars['String']>;
   /** Приоритет */
   priority: Scalars['Boolean'];
   /** Секции */
@@ -2753,7 +2749,7 @@ export type TableType = {
   rows: Array<Maybe<TableRowType>>;
 };
 
-/** Тег */
+/** Тег. */
 export type TagType = Node & {
   __typename?: 'TagType';
   /** Дата создания */
@@ -3296,7 +3292,6 @@ export type AddPageMutationVariables = Exact<{
   kindId?: InputMaybe<Scalars['Int']>;
   categoryId: Scalars['ID'];
   tagNames?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
-  text?: InputMaybe<Scalars['String']>;
 }>;
 
 export type AddPageMutation = { __typename?: 'Mutation', addPage: { __typename?: 'AddPageMutationPayload', success: boolean, errors: Array<{ __typename: 'ErrorFieldType', field: string, messages: Array<string> }>, page?: { __typename: 'PageType', id: string } | null } };
@@ -3446,14 +3441,13 @@ export type PagesQueryVariables = Exact<{
   categoryId?: InputMaybe<Scalars['ID']>;
   kindId?: InputMaybe<Scalars['ID']>;
   search?: InputMaybe<Scalars['String']>;
-  includePreview?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-export type PagesQuery = { __typename?: 'Query', pages: { __typename: 'PageTypeConnection', totalCount: number, edges: Array<{ __typename: 'PageTypeEdge', node?: { __typename: 'PageType', preview?: string | null, id: string, avatar?: string | null, parallax: boolean, title: string, views: number, signature?: string | null, hide: boolean, priority: boolean, createdAt: any, updatedAt: any, kind?: { __typename: 'PageKindType', id: string, name: string } | null, category: { __typename: 'CategoryType', id: string, avatar?: string | null, text: string, position: number, createdAt: any, updatedAt: any }, tags: Array<{ __typename: 'TagType', id: string, name: string, createdAt: any } | null>, user?: { __typename: 'UserType', id: string, username: string, avatar?: string | null, email: string, firstName: string, lastName: string, sirName?: string | null, isActive: boolean, createdAt: any } | null } | null } | null> } };
+export type PagesQuery = { __typename?: 'Query', pages: { __typename: 'PageTypeConnection', totalCount: number, edges: Array<{ __typename: 'PageTypeEdge', node?: { __typename: 'PageType', id: string, avatar?: string | null, parallax: boolean, title: string, views: number, signature?: string | null, hide: boolean, priority: boolean, createdAt: any, updatedAt: any, kind?: { __typename: 'PageKindType', id: string, name: string } | null, category: { __typename: 'CategoryType', id: string, avatar?: string | null, text: string, position: number, createdAt: any, updatedAt: any }, tags: Array<{ __typename: 'TagType', id: string, name: string, createdAt: any } | null>, user?: { __typename: 'UserType', id: string, username: string, avatar?: string | null, email: string, firstName: string, lastName: string, sirName?: string | null, isActive: boolean, createdAt: any } | null } | null } | null> } };
 
 export type SegmentsQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type SegmentsQuery = { __typename?: 'Query', segments: Array<{ __typename: 'SegmentType', id: string, name?: string | null, align: SegmentAlign, view?: SegmentView | null, position: number, createdAt: any, updatedAt: any, elements: Array<{ __typename: 'SegmentElementType', id: string, view?: SegmentElementView | null, represent?: SegmentElementRepresent | null, width: number, columns: number, pageSize: number, pageKind: { __typename: 'PageKindType', id: string, name: string, pages: Array<{ __typename: 'PageType', id: string, avatar?: string | null, title: string, createdAt: any, updatedAt: any, signature?: string | null, preview?: string | null, category: { __typename: 'CategoryType', id: string, avatar?: string | null, text: string, position: number, createdAt: any, updatedAt: any }, user?: { __typename: 'UserType', id: string, username: string, avatar?: string | null, email: string, firstName: string, lastName: string, sirName?: string | null, isActive: boolean, createdAt: any } | null, tags: Array<{ __typename: 'TagType', id: string, name: string, createdAt: any } | null> } | null> } } | null> }> };
+export type SegmentsQuery = { __typename?: 'Query', segments: Array<{ __typename: 'SegmentType', id: string, name?: string | null, align: SegmentAlign, view?: SegmentView | null, position: number, createdAt: any, updatedAt: any, elements: Array<{ __typename: 'SegmentElementType', id: string, view?: SegmentElementView | null, represent?: SegmentElementRepresent | null, width: number, columns: number, pageSize: number, pageKind: { __typename: 'PageKindType', id: string, name: string, pages: Array<{ __typename: 'PageType', id: string, avatar?: string | null, title: string, createdAt: any, updatedAt: any, signature?: string | null, category: { __typename: 'CategoryType', id: string, avatar?: string | null, text: string, position: number, createdAt: any, updatedAt: any }, user?: { __typename: 'UserType', id: string, username: string, avatar?: string | null, email: string, firstName: string, lastName: string, sirName?: string | null, isActive: boolean, createdAt: any } | null, tags: Array<{ __typename: 'TagType', id: string, name: string, createdAt: any } | null> } | null> } } | null> }> };
 
 export type TagsQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']>;

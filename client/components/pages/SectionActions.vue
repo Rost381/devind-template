@@ -14,20 +14,19 @@
           v-list-item-title {{ $t('pages.components.sectionActions.delete') }}
 </template>
 <script lang="ts">
-import type { PropType, ComputedRef } from '#app'
-import { computed, defineComponent, useNuxtApp } from '#app'
+import type { PropType, Ref } from '#app'
+import { defineComponent, toRef } from '#app'
+import { useAuthStore } from '~/store'
 import { HasPermissionFnType } from '~/store/auth'
 import { SectionInterface } from '~/types/graphql'
-import DeleteMenu from '~/components/common/menu/DeleteMenu.vue'
 
 export default defineComponent({
-  components: { DeleteMenu },
   props: {
     section: { type: Object as PropType<SectionInterface>, required: true }
   },
   setup () {
-    const { $store } = useNuxtApp()
-    const hasPerm: ComputedRef<HasPermissionFnType> = computed<HasPermissionFnType>(() => $store.getters['auth/hasPerm'])
+    const authStore = useAuthStore()
+    const hasPerm: Readonly<Ref<HasPermissionFnType>> = toRef(authStore, 'hasPerm')
     return { hasPerm }
   }
 })

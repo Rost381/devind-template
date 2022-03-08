@@ -5,7 +5,7 @@
 <script lang="ts">
 import { ApolloQueryResult } from '@apollo/client'
 import type { ComputedRef } from '#app'
-import { computed, defineComponent, onUnmounted, useRoute } from '#app'
+import { computed, defineComponent, onUnmounted, useNuxt2Meta, useRoute } from '#app'
 import { useCommonQuery, useI18n, usePage } from '~/composables'
 import { usePageStore } from '~/store'
 import { PageQuery, PageQueryVariables } from '~/types/graphql'
@@ -31,10 +31,10 @@ export default defineComponent({
         setActiveCategories(flatCategories.value, activeCategories)
       }
     })
-
+    useNuxt2Meta(() => ({ title: !loading.value ? page.value.title : t('loading') as string }))
     const bc: ComputedRef<BreadCrumbsItem[]> = computed<BreadCrumbsItem[]>(() => {
       const breadCrumbs: BreadCrumbsItem[] = []
-      if (!loading) {
+      if (!loading.value) {
         if (page.value.category && page.value.category.parent) {
           breadCrumbs.push({
             text: page.value.category.parent.text,

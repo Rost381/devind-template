@@ -54,7 +54,6 @@ class CategoryType(OptimizedDjangoObjectType):
     @staticmethod
     def resolve_nc(category: Category, info: ResolveInfo, *args, **kwargs):
         """Вытягивает соседей если нет родителей или дочерние элементы."""
-
         return category.category_set.all() if category.parent is None else category.parent.category_set.all()
 
     @staticmethod
@@ -64,7 +63,7 @@ class CategoryType(OptimizedDjangoObjectType):
 
 
 class TagType(OptimizedDjangoObjectType):
-    """Тег"""
+    """Тег."""
 
     user = graphene.Field(UserType, required=False, description='Пользователь, создавший тег')
 
@@ -119,7 +118,6 @@ class PageType(OptimizedDjangoObjectType):
 
     kind = graphene.Field(PageKindType, description='Тип')
     user = graphene.Field(UserType, description='Пользователь, создавший страницу')
-    preview = graphene.String(description='Первая текстовая секция')
 
     class Meta:
         model = Page
@@ -147,7 +145,6 @@ class PageType(OptimizedDjangoObjectType):
             'comments',
             'kind',
             'user',
-            'preview'
         )
 
     @staticmethod
@@ -164,15 +161,6 @@ class PageType(OptimizedDjangoObjectType):
     @resolver_hints(model_field='comment_set')
     def resolve_comments(page: Page, info: ResolveInfo, *args, **kwargs):
         return page.comment_set.all()
-
-    @staticmethod
-    def resolve_preview(page: Page, info: ResolveInfo, *args, **kwargs) -> Optional[str]:
-        section = page.section_set.filter(kind=Section.TEXT).order_by('position').first()
-        if section:
-            text: str = strip_tags(section.text)[:220]
-            text: str = ".".join(text.split(".")[:-1])
-            return f'{text}...' if len(text) > 5 else None
-        return None
 
 
 class SectionInterface(graphene.Interface):

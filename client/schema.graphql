@@ -111,8 +111,6 @@ input AddPageMutationInput {
   signature: String
   """Теги на странице"""
   tagNames: [String!]
-  """Первоначальное добавление текста страницы"""
-  text: String
   """Заголовок"""
   title: String!
 }
@@ -1628,8 +1626,6 @@ type PageType implements Node {
   kind: PageKindType
   """Показывать параллакс или нет"""
   parallax: Boolean!
-  """Первая текстовая секция"""
-  preview: String
   """Приоритет"""
   priority: Boolean!
   """Секции"""
@@ -2187,7 +2183,7 @@ type TableType {
   rows: [TableRowType]!
 }
 
-"""Тег"""
+"""Тег."""
 type TagType implements Node {
   """Дата создания"""
   createdAt: DateTime!

@@ -2,7 +2,7 @@
   page-container(:bread-crumbs="bc" :category="page && page.category" :loading="loading")
     template(#header)
       .text-h4.text-md-h2 {{ page.title }}
-    category-pages(v-if="!$apollo.queries.page.loading" :category="page.category")
+    category-pages(v-if="!loading" :category="page.category")
       v-card.pa-3
         page-sections(:page="page")
           template(#actions)
@@ -14,10 +14,10 @@
 
 <script lang="ts">
 import { ApolloQueryResult } from '@apollo/client'
-import type { ComputedRef } from '#app'
-import { computed, defineComponent, onUnmounted, useRoute } from '#app'
-import {useCommonQuery, useI18n, usePage } from '~/composables'
-import { useAuthStore, usePageStore } from '~/store'
+import type { ComputedRef, Ref } from '#app'
+import { computed, defineComponent, onUnmounted, toRef, useNuxt2Meta, useRoute } from '#app'
+import { useCommonQuery, useI18n, usePage } from '~/composables'
+import { HasPermissionFnType, useAuthStore, usePageStore } from '~/store'
 import { PageQuery, PageQueryVariables } from '~/types/graphql'
 import { BreadCrumbsItem } from '~/types/devind'
 import pageQuery from '~/gql/pages/queries/page.graphql'
@@ -30,10 +30,11 @@ export default defineComponent({
   components: { PageActions, PageSections, CategoryPages, PageContainer },
   setup () {
     const route = useRoute()
+    const authStore = useAuthStore()
     const { t, localePath } = useI18n()
-    const { hasPerm } = useAuthStore()
     const { setActiveCategories } = usePageStore()
     const { flatCategories } = usePage()
+    const hasPerm: Ref<HasPermissionFnType> = toRef(authStore, 'hasPerm')
 
     const { data: page, loading, onResult } = useCommonQuery<PageQuery, PageQueryVariables>({
       document: pageQuery,
@@ -47,9 +48,10 @@ export default defineComponent({
         setActiveCategories(flatCategories.value, activeCategories)
       }
     })
+    useNuxt2Meta(() => ({ title: !loading.value ? page.value.title : t('loading') as string }))
     const bc: ComputedRef<BreadCrumbsItem[]> = computed<BreadCrumbsItem[]>(() => {
       const breadCrumbs: BreadCrumbsItem[] = []
-      if (!loading) {
+      if (!loading.value) {
         if (page.value.category && page.value.category.parent) {
           breadCrumbs.push({
             text: page.value.category.parent.text,

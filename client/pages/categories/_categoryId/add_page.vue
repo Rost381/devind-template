@@ -53,7 +53,7 @@ export default defineComponent({
 
     const bc: ComputedRef<BreadCrumbsItem[]> = computed<BreadCrumbsItem[]>(() => {
       const breadCrumbs: BreadCrumbsItem[] = []
-      if (!loading) {
+      if (!loading.value) {
         if (category.value.parent) {
           breadCrumbs.push({
             text: category.value.parent.text,
@@ -66,7 +66,8 @@ export default defineComponent({
         }
         breadCrumbs.push({
           text: category.value.text,
-          to: localePath({ name: 'categories-categoryId', params: { categoryId: category.value.id } })
+          to: localePath({ name: 'categories-categoryId', params: { categoryId: category.value.id } }),
+          exact: true
         })
         breadCrumbs.push({
           text: t('pages.page.add.header') as string,
